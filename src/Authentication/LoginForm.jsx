@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextField, Button, IconButton, InputAdornment } from "@mui/material";
 import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -18,10 +19,29 @@ const LoginForm = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Add your login logic here
-    console.log("Login submitted:", formData);
+
+    try {
+      // Send a GET request to your backend for login
+      const response = await axios.get("http://localhost:3001/user/login", {
+        params: formData,
+      });
+
+      // Handle the response from the backend
+      console.log("Login response:", response.data);
+
+      // Display an alert for either successful login or login error
+      alert(response.data.message);
+
+      // TODO: Save the token in local storage or state for future requests
+    } catch (error) {
+      // Handle errors from the backend (e.g., display an error message)
+      console.error("Login error:", error.response.data);
+
+      // Display an alert for login error
+      alert("Login failed. Please check your credentials.");
+    }
   };
 
   return (

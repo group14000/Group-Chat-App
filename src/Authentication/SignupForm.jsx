@@ -9,6 +9,7 @@ import {
   Lock,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -27,10 +28,37 @@ const SignupForm = () => {
     setFormData({ ...formData, showPassword: !formData.showPassword });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    // Prevent the default form submission behavior
     event.preventDefault();
-    // Add your signup logic here
-    console.log("Form submitted:", formData);
+
+    try {
+      // Send a POST request to your backend
+      const response = await axios.post(
+        "http://localhost:3001/user/signup",
+        formData
+      );
+
+      // Handle the response from the backend (e.g., display a success message)
+      console.log("Backend response:", response.data);
+
+      // Clear the form fields on successful submission
+      setFormData({
+        name: "",
+        email: "",
+        mobile: "",
+        password: "",
+        showPassword: false,
+      });
+    } catch (error) {
+      // Handle errors from the backend (e.g., display an error message)
+      console.error("Backend error:", error.response.data);
+
+      if (error.response.data.message === "Email already exists") {
+        // Display an alert if the email already exists
+        alert("Email already exists. Please use a different email address.");
+      }
+    }
   };
 
   return (
