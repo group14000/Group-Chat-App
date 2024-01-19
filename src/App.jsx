@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginForm from "./Authentication/LoginForm";
 import SignupForm from "./Authentication/SignupForm";
-import ChatPage from "./Chat/ChatPage";
-import Navbar from "./Navbar/Navbar";
+import Header from "./Chat/Header";
+import ChatInterface from "./Chat/ChatInterface";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Header />
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
-        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat" element={<ChatInterface />} />
       </Routes>
     </BrowserRouter>
   );
