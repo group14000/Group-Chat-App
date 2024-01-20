@@ -4,18 +4,34 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 
 const MessageInput = () => {
-  // State for message input
   const [message, setMessage] = useState("");
 
-  // Function to handle message input change
   const handleChange = (e) => {
     setMessage(e.target.value);
   };
 
-  // Function to handle sending message
-  const handleSend = () => {
-    // Implement your logic for sending the message
-    console.log("Message sent:", message);
+  const handleSend = async () => {
+    const token = localStorage.getItem("jwtToken");
+
+    try {
+      const response = await fetch("http://localhost:3001/api/save-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      if (response.ok) {
+        console.log("Message sent:", message);
+        // Add your logic to update display state if needed
+      } else {
+        console.error("Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   };
 
   return (
@@ -31,10 +47,7 @@ const MessageInput = () => {
           label="Type your message"
         />
         <Button
-          onClick={() => {
-            handleSend();
-            // Add your logic to update display state if needed
-          }}
+          onClick={handleSend}
           style={{ padding: "5px 10px" }}
           variant="contained"
           color="primary"

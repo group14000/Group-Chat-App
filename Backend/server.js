@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRouter = require("./Components/Authentication/user");
-//const userMessageRouter = require("./Components/Message/userMessage");
+const userMessageRouter = require("./Components/Message/userMessage");
 
 const app = express();
 app.use(express.json());
@@ -11,7 +11,7 @@ app.use(cors());
 
 // Use the user router
 app.use("/user", userRouter);
-//app.use("/", userMessageRouter);
+app.use("/message", userMessageRouter); // Use the userMessage router for messages
 
 // Start the server
 const PORT = 3001;
