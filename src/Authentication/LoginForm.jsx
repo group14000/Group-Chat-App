@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -45,7 +45,8 @@ const LoginForm = () => {
 
   // Handler function to perform logout
   const handleLogout = () => {
-    // TODO: Implement logout logic (clear token, reset state, etc.)
+    // Clear stored credentials on logout
+    localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
     setShowLogoutConfirmation(false);
   };
@@ -70,6 +71,9 @@ const LoginForm = () => {
 
       // Set the login status to true
       setIsLoggedIn(true);
+
+      // Store login status in local storage
+      localStorage.setItem("isLoggedIn", true);
     } catch (error) {
       // Handle errors from the backend (e.g., display an error message)
       console.error("Login error:", error.response.data);
@@ -78,6 +82,16 @@ const LoginForm = () => {
       alert("Login failed. Please check your credentials.");
     }
   };
+
+  // useEffect to check local storage on component mount
+  useEffect(() => {
+    const storedLoggedInStatus = localStorage.getItem("isLoggedIn");
+
+    if (storedLoggedInStatus && storedLoggedInStatus === "true") {
+      // If user was logged in, set the state accordingly
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // JSX structure for the component
   return (

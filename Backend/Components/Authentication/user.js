@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
       );
 
     // Generate a JWT token for the user
-    const token = jwt.sign({ userId: result.insertId }, "your-secret-key", {
+    const token = jwt.sign({ userId: result.insertId }, "Diganta7908", {
       expiresIn: "1h",
     });
 
@@ -64,7 +64,7 @@ router.get("/login", async (req, res) => {
     }
 
     // Generate a JWT token for the authenticated user
-    const token = jwt.sign({ userId: user[0].id }, "your-secret-key", {
+    const token = jwt.sign({ userId: user[0].id }, "Diganta7908", {
       expiresIn: "1h",
     });
 
