@@ -1,17 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginForm from "./Authentication/LoginForm";
-import SignupForm from "./Authentication/SignupForm";
-import Header from "./Chat/Header";
-import ChatInterface from "./Chat/ChatInterface";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Welcome from "./components/Welcome";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
       <Routes>
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/signup" element={<SignupForm />} />
-        <Route path="/chat" element={<ChatInterface />} />
+        <Route path="/" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/welcome" element={<Welcome />} />
       </Routes>
     </BrowserRouter>
   );
